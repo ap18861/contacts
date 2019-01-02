@@ -59,7 +59,7 @@ def display_name():
 
 def write_file():
     """Writes to the csv file for a new entry."""
-    with open('contacts.csv', mode = 'a') as contacts_file:
+    with open('contacts.csv', mode = 'a', newline = '\n') as contacts_file:
         contacts_writer = csv.writer(contacts_file, delimiter = ',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         
         first_name = first_name_entry()
@@ -77,7 +77,6 @@ def read_file():
         line_count = 0
         for row in csv_reader:
             if line_count == 0:
-                print()
                 print(f'{", ".join(row)}')
                 line_count += 1
             else:
