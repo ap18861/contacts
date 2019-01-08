@@ -1,13 +1,16 @@
 import csv
 
+file_name = "contacts.csv"
 def get_selection():
     """Enter which function you would like to run."""
-    x = input("Please enter if you would like to add a contact or read the file: ")
+    x = input("Please enter your selection: ")
     if x == '1':
         write_file()
     elif x == '2':
         read_file()
     elif x == '3':
+        search_file()
+    elif x == '4':
         exit()
 
 def welcome():
@@ -18,22 +21,23 @@ def welcome():
     print("-"*len(welcome_sentence))
     print("Press 1 to create a new contact.")
     print("Press 2 to read from the csv file.")
-    print("Press 3 to exit from the program.")
+    print("Press 3 to search the csv file.")
+    print("Press 4 to exit from the program.")
     get_selection()
     
 def first_name_entry():
     """First name entry of new contact."""
-    first_name = input("Please enter the new contact first name: ")
+    first_name = input("Please enter the contact first name: ")
     return first_name
 
 def email_entry():
     """Enter the email of the new contact."""
-    email = input("Please enter the email of your new contact: ")
+    email = input("Please enter the email of your contact: ")
     return email
 
 def last_name_entry():
     """Enter the last name of the new contact."""
-    last_name = input("Please enter the new contact last name: ")
+    last_name = input("Please enter the contact last name: ")
     return last_name
 
 def name_entry():
@@ -45,11 +49,11 @@ def name_entry():
 
 def number_entry():
     """Enter the phone number of the new contact."""
-    phone_number = input("Please enter the phone number of your new contact: ")
+    phone_number = input("Please enter the phone number of your contact: ")
     return phone_number
 
 def display_name():
-    """Displays the information of the new entry."""
+    """Displays the information of the entry."""
     name = name_entry()
     phone_number = number_entry()
     email = email_entry()
@@ -84,7 +88,42 @@ def read_file():
 
     welcome()
 
+def search_file():
+    """Searches for a value in csv file."""    
+    value = get_contact_value()
+    with open(file_name, mode = 'r') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter = ',')
+        next(csv_reader, None) #skip header
+        for row in csv_reader:
+            if value in row:
+                print(row)
+    
+    welcome()
+def get_contact_value():
+    """Gets the value that we want to search."""
+
+    print("For which value would you like to search?")
+    print("Press 1 to search by first name.")
+    print("Press 2 to search by last name.")
+    print("Press 3 to search by phone number.")
+    print("Press 4 to search by email.")
+    print("Press 5 to go back to the Welcome screen.")
+    z = input("Please enter selection: ")
+    if z == "1":
+        first_name = first_name_entry()
+        return first_name
+    elif z == "2":
+        last_name = last_name_entry()
+        return last_name
+    elif z == "3":
+        phone_number = number_entry()
+        return phone_number
+    elif z == "4":
+        email = email_entry()
+        return email
+    else:
+        print("You have not entered a proper value.")
+        welcome()   
+
 welcome()
 
-#write_file()
-# read_file()
